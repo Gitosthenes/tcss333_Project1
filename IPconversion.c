@@ -1,60 +1,77 @@
 #include <stdio.h>
-#include <stdbool.h>
 
+typedef int bool;
+#define true 1
+#define false 0
+
+void option1 ();
+void option2 ();
 bool isInRange (int, bool);
 int decToBin (int);
 
 int main (void) {
 
-    START:
-    printf("\nWhat type of conversion would you like to do? [1: IP address & Subnet, 2: Network prefix & Host ID]: ");
+    bool running = true;
 
-    int choice;
-    LOOP1:
-    scanf("%d", &choice);
-    while (choice != 1 && choice != 2) {
-        printf("Not a valid option, please re-enter... ");
-        goto LOOP1;
-    }
+    do {
+        printf("\nWhat type of conversion would you like to do? [1: IP address & Subnet, 2: Network prefix & Host ID]: ");
 
-    if (choice == 1) {
-        int first, second, third, fourth, subnet;
-        LOOP2:
-        printf("Enter the IP address, followed by the Subnet (ex. 192.192.192.192/24): ");
-        scanf ("%d.%d.%d.%d/%d", &first, &second, &third, &fourth, &subnet);
-        while (!isInRange(first, false) || !isInRange(second, false) || !isInRange(third, false) || !isInRange(fourth, false) || !isInRange(subnet, true)) {
-            printf("Invalid IP or Subnet. Please re-enter...\n");
-            goto LOOP2;
+        int choice;
+        scanf("%d", &choice);
+        while (choice != 1 && choice != 2) {
+            printf("Not a valid option, please re-enter... ");
+            scanf("%d", &choice);
         }
 
-        printf("\nThe binary representation of the IP address is: ");
-        printf("%08d %08d %08d %08d\n", decToBin(first), decToBin(second), decToBin(third), decToBin(fourth));
+        if (choice == 1) {
+            option1();
+        } else {
+            option2();
+        }
 
-        printf("The binary representation of the Subnet mask is: ");
-        printf("%08d\n\n", decToBin(subnet));
+        char selection;
+        do {
+            printf("Please make a selection [r: Repeat program, q: Quit program]: ");
+            scanf(" %c", &selection);
+
+            if (selection == 'r') {
+                continue;
+            } else if (selection == 'q') {
+                running = false;
+            } else {
+                printf("Invalid selection...\n ");
+            }
+        } while (selection != 'r' && selection != 'q');
+
+    } while (running);
+
+    return 0;
+}
+
+void option1 () {
+
+    int first, second, third, fourth, subnet;
+    LOOP2:
+    printf("Enter the IP address, followed by the Subnet (ex. 192.192.192.192/24): ");
+    scanf ("%d.%d.%d.%d/%d", &first, &second, &third, &fourth, &subnet);
+    while (!isInRange(first, false) || !isInRange(second, false) || !isInRange(third, false) || !isInRange(fourth, false) || !isInRange(subnet, true)) {
+        printf("Invalid IP or Subnet. Please re-enter...\n");
+        goto LOOP2;
+    }
+
+    printf("\nThe binary representation of the IP address is: ");
+    printf("%08d %08d %08d %08d\n", decToBin(first), decToBin(second), decToBin(third), decToBin(fourth));
+
+    printf("The binary representation of the Subnet mask is: ");
+    printf("%08d\n\n", decToBin(subnet));
 /*
         printf("TEST OUTPUT: %d %d %d %d %d\n", first, second, third, fourth, subnet);
 */
-    } else {
-        printf("2 pressed.\n");
-    }
 
-    char selection;
+}
 
-    END:
-    printf("Please make a selection [r: Repeat program, q: Quit program]: ");
-    scanf(" %c", &selection);
-
-    if (selection == 'r') {
-        goto START;
-    } else if (selection == 'q') {
-
-    } else {
-        printf("Invalid selection...\n ");
-        goto END;
-    }
-
-    return 0;
+void option2 () {
+    printf("2 pressed.\n");
 }
 
 bool isInRange (int input, bool isSubnet) {
