@@ -1,3 +1,8 @@
+/*
+ * Alex Bledsoe - Assignment 1
+ * tcss333 - Winter 2018
+ */
+
 #include <stdio.h>
 
 typedef int bool;
