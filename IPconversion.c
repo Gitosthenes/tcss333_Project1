@@ -51,12 +51,11 @@ int main (void) {
 void option1 () {
 
     int first, second, third, fourth, subnet;
-    LOOP2:
     printf("Enter the IP address, followed by the Subnet (ex. 192.192.192.192/24): ");
     scanf ("%d.%d.%d.%d/%d", &first, &second, &third, &fourth, &subnet);
     while (!isInRange(first, false) || !isInRange(second, false) || !isInRange(third, false) || !isInRange(fourth, false) || !isInRange(subnet, true)) {
         printf("Invalid IP or Subnet. Please re-enter...\n");
-        goto LOOP2;
+        scanf ("%d.%d.%d.%d/%d", &first, &second, &third, &fourth, &subnet);
     }
 
     printf("\nThe binary representation of the IP address is: ");
