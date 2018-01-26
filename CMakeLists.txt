@@ -3,4 +3,4 @@ project(Project1 C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_executable(Project1 IPconversion.c)
+add_executable(Project1 pr1.c)
